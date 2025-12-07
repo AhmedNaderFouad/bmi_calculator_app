@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 class DataContainer extends StatelessWidget {
   final String title;
   final int value;
-  const DataContainer({super.key, required this.title, required this.value});
+  final void Function()? increment;
+  final void Function()? decrement;
+  const DataContainer({
+    super.key,
+    required this.title,
+    required this.value,
+    this.increment,
+    this.decrement,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +36,23 @@ class DataContainer extends StatelessWidget {
 
               children: [
                 FloatingActionButton.small(
-                  onPressed: () {},
-                  backgroundColor: Color(0xff8B8C9E),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Icon(Icons.add),
-                ),
-
-                FloatingActionButton.small(
-                  onPressed: () {},
+                  key: UniqueKey(),
+                  onPressed: decrement,
                   backgroundColor: Color(0xff8B8C9E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Icon(Icons.remove),
+                ),
+
+                FloatingActionButton.small(
+                  key: UniqueKey(),
+                  onPressed: increment,
+                  backgroundColor: Color(0xff8B8C9E),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Icon(Icons.add),
                 ),
               ],
             ),

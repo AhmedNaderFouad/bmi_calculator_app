@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class SliderSection extends StatefulWidget {
-  const SliderSection({super.key});
+  final Function(double) onHeightChanged;
+
+  const SliderSection({super.key, required this.onHeightChanged});
 
   @override
   State<SliderSection> createState() => _SliderSectionState();
 }
 
 class _SliderSectionState extends State<SliderSection> {
-  double height = 170;
+  double height = 100;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,12 +21,13 @@ class _SliderSectionState extends State<SliderSection> {
         color: Color(0xff333244),
       ),
       child: Column(
-        spacing: 20,
         children: [
           Text(
             "Height",
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
           ),
+
+          SizedBox(height: 15),
 
           Text.rich(
             TextSpan(
@@ -32,21 +36,24 @@ class _SliderSectionState extends State<SliderSection> {
                   text: height.round().toString(),
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 30),
                 ),
-                TextSpan(text: "CM", style: TextStyle(fontSize: 16)),
+                TextSpan(text: " CM", style: TextStyle(fontSize: 16)),
               ],
             ),
           ),
 
           Slider(
-            min: 50,
-            max: 200,
+            min: 0,
+            max: 250,
             value: height,
-            onChanged: (value) {
-              height = value;
-              setState(() {});
-            },
             activeColor: Color(0xffE83D67),
             inactiveColor: Colors.white,
+            onChanged: (value) {
+              setState(() {
+                height = value;
+              });
+
+              widget.onHeightChanged(value);
+            },
           ),
         ],
       ),
